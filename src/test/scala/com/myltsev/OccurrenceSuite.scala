@@ -22,12 +22,10 @@ import scala.meta.io.AbsolutePath
 import scala.meta.testkit.DiffAssertions
 
 class OccurrenceSuite extends FunSuite with DiffAssertions {
-  ScalaVersion.doIf212("OccurrenceSuite") {
-    OccurrenceSuite.testCases().foreach { t =>
-      test(t.name) {
-        val body = t.body()
-        assertNoDiff(body.obtained, body.expected)
-      }
+  OccurrenceSuite.testCases().foreach { t =>
+    test(t.name) {
+      val body = t.body()
+      assertNoDiff(body.obtained, body.expected)
     }
   }
 }

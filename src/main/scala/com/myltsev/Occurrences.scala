@@ -23,6 +23,14 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
     symbolTable
   }
 
+  def all(): Seq[s.SymbolOccurrence] = {
+    val occurrences = for {
+      sym <- symbolTable.keys
+      occ <- find(sym) if occ.range.isDefined
+    } yield occ
+    occurrences.toSeq
+  }
+
   def find(sym: String): Option[s.SymbolOccurrence] = {
     val range = for {
       nodeOpt <- symbolTable.get(sym)

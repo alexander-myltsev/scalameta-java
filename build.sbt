@@ -12,6 +12,14 @@ lazy val root = (project in file("."))
       javaParser,
       scalaMeta,
       `scala-java8-compat`,
-      scalaTest % Test
+      scalaTest % Test,
+      scalaMetaCore % Test,
+      scalaMetaTestKit % Test,
+      scalaCheck % Test
+    ),
+
+    buildInfoPackage := "com.myltsev",
+    buildInfoKeys := Seq[BuildInfoKey](
+      "testSourceDirectory" -> new File("test-java-sources")
     )
   )

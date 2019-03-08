@@ -6,7 +6,7 @@ import org.scalatest._
 
 class HelloSpec extends FunSuite with Matchers {
   test("pass easy test") {
-    val path = Paths.get(getClass.getResource("/test/Hello.java").toURI)
+    val path = Paths.get(BuildInfo.testSourceDirectory.getAbsolutePath, "input", "test", "Hello.java")
     val occurrences = Occurrences.apply(path)
     val occurrence = occurrences.find("test/Hello#")
 

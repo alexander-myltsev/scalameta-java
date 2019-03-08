@@ -15,6 +15,17 @@ import java.nio.file.Path
 
 
 class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends Semantics {
+  {
+    if (!parseResult.isSuccessful) {
+      val problems = for (problem <- parseResult.getProblems.asScala) yield {
+        problem.getMessage
+      }
+      throw new Exception(
+        s"""Parsing was now successful:
+           |${problems.mkString("\n")}""".stripMargin)
+    }
+  }
+
   val symbolTable: SymbolTable = {
     val stg = new SymbolTableGenerator()
     val symbolTable = emptySymbolTable

@@ -61,7 +61,12 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
       )
     }
 
-    val occurrence = s.SymbolOccurrence(symbol = sym, range = range)
+    val role = for (node <- symbolTable.get(sym)) yield node.role
+    val occurrence = s.SymbolOccurrence(
+      symbol = sym,
+      range = range,
+      role = role.getOrElse(s.SymbolOccurrence.Role.UNKNOWN_ROLE),
+    )
     Some(occurrence)
   }
 }

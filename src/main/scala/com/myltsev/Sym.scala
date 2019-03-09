@@ -105,5 +105,46 @@ trait Sym { semantics: Semantics =>
       case _ =>
         throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
     }
+
+    def kind: s.SymbolInformation.Kind = node match {
+      case _: jp.ast.PackageDeclaration =>
+        k.PACKAGE
+      case _: jp.ast.`type`.TypeParameter =>
+        k.TYPE_PARAMETER
+      case _: jp.ast.body.FieldDeclaration =>
+        k.FIELD
+      case _: jp.ast.body.VariableDeclarator =>
+        k.FIELD
+      case _: jp.ast.body.EnumConstantDeclaration =>
+        k.FIELD
+      case _: jp.ast.body.Parameter =>
+        k.PARAMETER
+      case elem: jp.ast.body.CallableDeclaration[_] =>
+        if (elem.isConstructorDeclaration) {
+          k.CONSTRUCTOR
+        } else if (elem.isMethodDeclaration) {
+          k.METHOD
+        } else {
+          sys.error(elem.toString)
+        }
+      case elem: jp.ast.body.ClassOrInterfaceDeclaration =>
+        if (elem.isInterface) {
+          k.INTERFACE
+        } else {
+          k.CLASS
+        }
+      case _: jp.ast.body.EnumDeclaration =>
+        k.CLASS
+      case _: jp.ast.body.AnnotationDeclaration =>
+        k.INTERFACE
+      case n => sys.error(n.toString)
+    }
+
+    def role: s.SymbolOccurrence.Role = kind match {
+      case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.METHOD | k.INTERFACE | k.CLASS =>
+        s.SymbolOccurrence.Role.DEFINITION
+      case _ =>
+        s.SymbolOccurrence.Role.UNKNOWN_ROLE
+    }
   }
 }

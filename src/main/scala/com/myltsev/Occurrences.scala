@@ -62,8 +62,8 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
       )
     }
 
-    val occurence = s.SymbolOccurrence(symbol = sym, range = range)
-    Some(occurence)
+    val occurrence = s.SymbolOccurrence(symbol = sym, range = range)
+    Some(occurrence)
   }
 }
 

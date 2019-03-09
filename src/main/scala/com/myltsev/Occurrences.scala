@@ -44,8 +44,7 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
 
   def find(sym: String): Option[s.SymbolOccurrence] = {
     val range = for {
-      nodeOpt <- symbolTable.get(sym)
-      node <- nodeOpt
+      node <- symbolTable.get(sym)
       _ <- node.getRange.asScala
       rangeOpt = node match {
         case n: jp.ast.nodeTypes.NodeWithSimpleName[_] => n.getName.getRange.asScala

@@ -17,7 +17,10 @@ trait SyntheticNodes { semantics: Semantics =>
   class SyntheticNodesGenerator extends jp.ast.visitor.VoidVisitorAdapter[Unit] {
     override def visit(cid: jp.ast.body.ClassOrInterfaceDeclaration, arg: Unit): Unit = {
       if (cid.getConstructors.isEmpty) {
-        cid.addConstructor()
+        val cd = cid.addConstructor()
+        for (r <- cd.getName.getRange.asScala) {
+          cd.setRange(r)
+        }
       }
 
       if (cid.isInterface) {

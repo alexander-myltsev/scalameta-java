@@ -1,4 +1,4 @@
 package test;
 
-class Hello/*=>test.Hello#*/ {
+class Hello/*=>test.Hello#*//*=>test.Hello#`<init>`().*/ {
 }

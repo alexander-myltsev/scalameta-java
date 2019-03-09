@@ -63,6 +63,11 @@ object OccurrenceSuite {
                                           occurrences = occurrences)
           val expectpath = expectroot.resolve(relpath)
           val obtained = OccurrenceSuite.printTextDocument(textdocument)
+          if (System.getProperty("overwrite-expected", "false") == "true") {
+            val pw = new java.io.PrintWriter(expectpath.toFile)
+            pw.print(obtained)
+            pw.close()
+          }
           val expected =
             if (expectpath.isFile) {
               FileIO.slurp(expectpath, StandardCharsets.UTF_8)

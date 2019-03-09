@@ -27,6 +27,7 @@ trait SyntheticNodes { semantics: Semantics =>
           val cd = cid.addConstructor()
           for (r <- cd.getName.getRange.asScala) {
             cd.setRange(r)
+            cd.getName.setRange(r)
           }
         }
       }
@@ -38,6 +39,10 @@ trait SyntheticNodes { semantics: Semantics =>
       if (ed.getMethodsByName(valuesMethodName).isEmpty) {
         val m = ed.addMethod(valuesMethodName,
           jp.ast.Modifier.Keyword.PUBLIC, jp.ast.Modifier.Keyword.STATIC)
+        for (r <- ed.getName.getRange.asScala) {
+          m.setRange(r)
+          m.getName.setRange(r)
+        }
       }
 
       // add synthetic `valueOf(string)` method
@@ -51,6 +56,10 @@ trait SyntheticNodes { semantics: Semantics =>
             new jp.ast.expr.SimpleName("name")
           )
         )
+        for (r <- ed.getName.getRange.asScala) {
+          m.setRange(r)
+          m.getName.setRange(r)
+        }
       }
     }
   }

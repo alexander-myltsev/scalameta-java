@@ -16,17 +16,17 @@ import scala.meta.internal.semanticdb.SymbolInformation.{Property => p}
 trait SyntheticNodes { semantics: Semantics =>
   class SyntheticNodesGenerator extends jp.ast.visitor.VoidVisitorAdapter[Unit] {
     override def visit(cid: jp.ast.body.ClassOrInterfaceDeclaration, arg: Unit): Unit = {
-      if (cid.getConstructors.isEmpty) {
-        val cd = cid.addConstructor()
-        for (r <- cd.getName.getRange.asScala) {
-          cd.setRange(r)
-        }
-      }
-
       if (cid.isInterface) {
         cid.getMethods.asScala.foreach { md =>
           if (md.getModifiers.isEmpty) {
             md.addModifier(jp.ast.Modifier.Keyword.ABSTRACT)
+          }
+        }
+      } else {
+        if (cid.getConstructors.isEmpty) {
+          val cd = cid.addConstructor()
+          for (r <- cd.getName.getRange.asScala) {
+            cd.setRange(r)
           }
         }
       }

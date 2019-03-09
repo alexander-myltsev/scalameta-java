@@ -1,3 +1,3 @@
 package com.myltsev
 
-trait Semantics extends Sym with SymbolTable
+trait Semantics extends Sym with SymbolTable with SyntheticNodes

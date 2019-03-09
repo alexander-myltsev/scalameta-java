@@ -27,10 +27,10 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
   }
 
   val symbolTable: SymbolTable = {
-    val stg = new SymbolTableGenerator()
     val symbolTable = emptySymbolTable
     val cu = parseResult.getResult.get
-    stg.visit(cu, symbolTable)
+    new SyntheticNodesGenerator().visit(cu, ())
+    new SymbolTableGenerator().visit(cu, symbolTable)
     symbolTable
   }
 

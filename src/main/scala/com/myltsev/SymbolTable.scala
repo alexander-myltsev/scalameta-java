@@ -35,18 +35,6 @@ trait SymbolTable { semantics: Semantics =>
     }
 
     override def visit(cid: jp.ast.body.ClassOrInterfaceDeclaration, arg: SymbolTable): Unit = {
-      if (cid.getConstructors.isEmpty) {
-        cid.addConstructor()
-      }
-
-      if (cid.isInterface) {
-        cid.getMethods.asScala.foreach { md =>
-          if (md.getModifiers.isEmpty) {
-            md.addModifier(jp.ast.Modifier.Keyword.ABSTRACT)
-          }
-        }
-      }
-
       super.visit(cid, arg)
       arg += cid.sym -> Some(cid)
     }
@@ -77,26 +65,6 @@ trait SymbolTable { semantics: Semantics =>
     }
 
     override def visit(ed: jp.ast.body.EnumDeclaration, arg: SymbolTable): Unit = {
-      // add synthetic `values` method
-      val valuesMethodName = "values"
-      if (ed.getMethodsByName(valuesMethodName).isEmpty) {
-        val m = ed.addMethod(valuesMethodName,
-          jp.ast.Modifier.Keyword.PUBLIC, jp.ast.Modifier.Keyword.STATIC)
-      }
-
-      // add synthetic `valueOf(string)` method
-      val valueOfMethodName = "valueOf"
-      if (ed.getMethodsByName(valueOfMethodName).isEmpty) {
-        val m = ed.addMethod(valueOfMethodName,
-          jp.ast.Modifier.Keyword.PUBLIC, jp.ast.Modifier.Keyword.STATIC)
-        m.addParameter(
-          new jp.ast.body.Parameter(
-            new jp.JavaParser().parseClassOrInterfaceType("java.lang.String").getResult.get,
-            new jp.ast.expr.SimpleName("name")
-          )
-        )
-      }
-
       super.visit(ed, arg)
       arg += ed.sym -> Some(ed)
     }

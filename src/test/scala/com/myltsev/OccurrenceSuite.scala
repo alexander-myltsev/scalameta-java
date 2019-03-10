@@ -118,7 +118,12 @@ object OccurrenceSuite {
   }
 
   def printSymbol(sb: StringBuilder, symbol: String, role: SymbolOccurrence.Role): Unit = {
-    val arrow = if (role.isDefinition) "<=" else "=>"
+    val arrow = role match {
+      case SymbolOccurrence.Role.DEFINITION => "<="
+      case SymbolOccurrence.Role.REFERENCE=> "=>"
+      case SymbolOccurrence.Role.UNKNOWN_ROLE => "??"
+      case _ => throw new Exception("Unexpected `role` type")
+    }
     sb.append("/*")
       .append(arrow)
       // replace package / with dot . to not upset GitHub syntax highlighting.

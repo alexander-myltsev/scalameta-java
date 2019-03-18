@@ -2,11 +2,11 @@ import sbt._
 
 object Dependencies {
   private object version {
-    val scalaMeta = "4.1.0"
+    val scalaMeta = "4.1.5"
     val scalaCheck = "1.14.0"
-    val scalaTest = "3.0.5"
+    val scalaTest = "3.0.7"
     val `java8-compat` = "0.9.0"
-    val javaParser = "3.13.1"
+    val javaParser = "3.13.4"
   }
 
   lazy val javaParser = "com.github.javaparser" % "javaparser-symbol-solver-core" % version.javaParser

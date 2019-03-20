@@ -141,7 +141,8 @@ trait Sym { semantics: Semantics =>
     }
 
     def role: s.SymbolOccurrence.Role = kind match {
-      case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.METHOD | k.INTERFACE | k.CLASS =>
+      case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.METHOD | k.INTERFACE |
+           k.CLASS | k.PARAMETER =>
         s.SymbolOccurrence.Role.DEFINITION
       case _ =>
         s.SymbolOccurrence.Role.UNKNOWN_ROLE

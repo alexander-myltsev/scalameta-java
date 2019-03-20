@@ -50,11 +50,10 @@ trait SyntheticNodes { semantics: Semantics =>
       if (ed.getMethodsByName(valueOfMethodName).isEmpty) {
         val m = ed.addMethod(valueOfMethodName,
           jp.ast.Modifier.Keyword.PUBLIC, jp.ast.Modifier.Keyword.STATIC)
+        val stringType = new jp.JavaParser().parseClassOrInterfaceType("java.lang.String").getResult.get
+        stringType.setRange(null)
         m.addParameter(
-          new jp.ast.body.Parameter(
-            new jp.JavaParser().parseClassOrInterfaceType("java.lang.String").getResult.get,
-            new jp.ast.expr.SimpleName("name")
-          )
+          new jp.ast.body.Parameter(stringType, new jp.ast.expr.SimpleName("name"))
         )
         for (r <- ed.getName.getRange.asScala) {
           m.setRange(r)

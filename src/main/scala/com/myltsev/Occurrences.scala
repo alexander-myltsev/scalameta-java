@@ -1,17 +1,14 @@
 package com.myltsev
 
-import com.github.{javaparser => jp}
-import scala.collection.mutable
 import scala.compat.java8.OptionConverters._
 import scala.collection.JavaConverters._
-import scala.collection.mutable
-import scala.annotation.switch
 import com.github.{javaparser => jp}
 import scala.meta.internal.semanticdb.Scala.{Descriptor => d, _}
 import scala.meta.internal.{semanticdb => s}
 import scala.meta.internal.semanticdb.SymbolInformation.{Kind => k}
 import scala.meta.internal.semanticdb.SymbolInformation.{Property => p}
 import java.nio.file.Path
+import java.io.File
 
 
 class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends Semantics {
@@ -72,13 +69,28 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
 }
 
 object Occurrences {
+  private def createJavaParser(): jp.JavaParser = {
+    val combinedTypeSolver = new jp.symbolsolver.resolution.typesolvers.CombinedTypeSolver(
+      new jp.symbolsolver.resolution.typesolvers.ReflectionTypeSolver(),
+      new jp.symbolsolver.resolution.typesolvers.JavaParserTypeSolver(
+        new File("test-java-sources/input")
+      )
+    )
+    val symbolSolver = new jp.symbolsolver.JavaSymbolSolver(combinedTypeSolver)
+    val javaParser = new jp.JavaParser()
+    javaParser.getParserConfiguration.setSymbolResolver(symbolSolver)
+    javaParser
+  }
+
   def apply(code: String): Occurrences = {
-    val pr = new jp.JavaParser().parse(code)
+    val jprs = createJavaParser()
+    val pr = jprs.parse(code)
     new Occurrences(pr)
   }
 
   def apply(path: Path): Occurrences = {
-    val pr = new jp.JavaParser().parse(path)
+    val jprs = createJavaParser()
+    val pr = jprs.parse(path)
     new Occurrences(pr)
   }
 }

@@ -68,5 +68,16 @@ trait SymbolTable { semantics: Semantics =>
       super.visit(ed, arg)
       arg += ed.sym -> ed
     }
+
+    override def visit(coit: jp.ast.`type`.ClassOrInterfaceType, arg: SymbolTable): Unit = {
+      super.visit(coit, arg)
+      try {
+        coit.resolve()
+        arg += coit.sym -> coit
+      } catch {
+        case _: jp.resolution.UnsolvedSymbolException => ()
+        case _: java.lang.UnsupportedOperationException => ()
+      }
+    }
   }
 }

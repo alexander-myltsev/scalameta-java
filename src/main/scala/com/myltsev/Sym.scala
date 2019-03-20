@@ -102,6 +102,9 @@ trait Sym { semantics: Semantics =>
         Symbols.Global(owner, d.Term(sn))
       case _: jp.ast.`type`.TypeParameter =>
         Symbols.Global(owner, d.TypeParameter(symbolName))
+      case coit: jp.ast.`type`.ClassOrInterfaceType =>
+        val coitResolved = coit.resolve()
+        coitResolved.getQualifiedName.replace('.', '/')
       case _ =>
         throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
     }
@@ -137,6 +140,8 @@ trait Sym { semantics: Semantics =>
         k.CLASS
       case _: jp.ast.body.AnnotationDeclaration =>
         k.INTERFACE
+      case _: jp.ast.`type`.ClassOrInterfaceType =>
+        k.TYPE
       case n => sys.error(n.toString)
     }
 
@@ -144,6 +149,8 @@ trait Sym { semantics: Semantics =>
       case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.METHOD | k.INTERFACE |
            k.CLASS | k.PARAMETER =>
         s.SymbolOccurrence.Role.DEFINITION
+      case k.TYPE =>
+        s.SymbolOccurrence.Role.REFERENCE
       case _ =>
         s.SymbolOccurrence.Role.UNKNOWN_ROLE
     }

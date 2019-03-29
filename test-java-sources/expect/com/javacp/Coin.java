@@ -5,5 +5,5 @@ public enum Coin/*<=com.javacp.Coin#*//*<=com.javacp.Coin#valueOf().*//*<=com.ja
   Coin/*<=com.javacp.Coin#`<init>`().*/(int value/*<=com.javacp.Coin#`<init>`().(value)*/) { this.value = value; }
 
   private final int value/*<=com.javacp.Coin#value.*/;
-  public int value/*<=com.javacp.Coin#value().*/() { return value; }
+  public int/*=>scala.Int#*/ value/*<=com.javacp.Coin#value().*/() { return value; }
 }

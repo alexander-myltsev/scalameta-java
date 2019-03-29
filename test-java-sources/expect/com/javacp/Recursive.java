@@ -17,7 +17,7 @@ public abstract class Recursive/*<=com.javacp.Recursive#`<init>`().*//*<=com.jav
     public <Anon/*<=com.javacp.Recursive#foo().[Anon]*/> ArrayList/*=>java.util.ArrayList*/<Anon> foo/*<=com.javacp.Recursive#foo().*/() {
         return new ArrayList<Anon>() {
             @Override
-            public boolean remove/*<=*/(Object/*=>java.lang.Object*/ o/*<=(o)*/) {
+            public boolean/*=>scala.Boolean#*/ remove/*<=*/(Object/*=>java.lang.Object*/ o/*<=(o)*/) {
                 return true;
             }
         };

@@ -79,5 +79,10 @@ trait SymbolTable { semantics: Semantics =>
         case _: java.lang.UnsupportedOperationException => ()
       }
     }
+
+    override def visit(pt: jp.ast.`type`.PrimitiveType, arg: SymbolTable): Unit = {
+      super.visit(pt, arg)
+      arg += pt.sym -> pt
+    }
   }
 }

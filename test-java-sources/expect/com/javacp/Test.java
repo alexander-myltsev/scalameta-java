@@ -31,7 +31,7 @@ public final class Test/*<=com.javacp.Test#*//*<=com.javacp.Test#`<init>`().*/<A
         return new int[0];
     }
     void genericParams/*<=com.javacp.Test#genericParams().*/(A a/*<=com.javacp.Test#genericParams().(a)*/, B b/*<=com.javacp.Test#genericParams().(b)*/) { }
-    void primitiveParams/*<=com.javacp.Test#primitiveParams().*/(int a/*<=com.javacp.Test#primitiveParams().(a)*/, long b/*<=com.javacp.Test#primitiveParams().(b)*/, float c/*<=com.javacp.Test#primitiveParams().(c)*/, double d/*<=com.javacp.Test#primitiveParams().(d)*/, short e/*<=com.javacp.Test#primitiveParams().(e)*/, byte f/*<=com.javacp.Test#primitiveParams().(f)*/, boolean g/*<=com.javacp.Test#primitiveParams().(g)*/, char h/*<=com.javacp.Test#primitiveParams().(h)*/) { }
+    void primitiveParams/*<=com.javacp.Test#primitiveParams().*/(int a/*<=com.javacp.Test#primitiveParams().(a)*/, long b/*<=com.javacp.Test#primitiveParams().(b)*/, float c/*<=com.javacp.Test#primitiveParams().(c)*/, double/*=>scala.Double#*/ d/*<=com.javacp.Test#primitiveParams().(d)*/, short e/*<=com.javacp.Test#primitiveParams().(e)*/, byte f/*<=com.javacp.Test#primitiveParams().(f)*/, boolean g/*<=com.javacp.Test#primitiveParams().(g)*/, char h/*<=com.javacp.Test#primitiveParams().(h)*/) { }
     void typeParams/*<=com.javacp.Test#typeParams().*/(ArrayList/*=>java.util.ArrayList*/<HashMap/*=>java.util.HashMap*/<A, String[]>> a/*<=com.javacp.Test#typeParams().(a)*/, Hashtable/*=>java.util.Hashtable*/<String, B> b/*<=com.javacp.Test#typeParams().(b)*/) { }
     <C/*<=com.javacp.Test#methodTypeParams().[C]*/ extends Integer/*=>java.lang.Integer*/> void methodTypeParams/*<=com.javacp.Test#methodTypeParams().*/(C c/*<=com.javacp.Test#methodTypeParams().(c)*/) { }
 
@@ -40,12 +40,12 @@ public final class Test/*<=com.javacp.Test#*//*<=com.javacp.Test#`<init>`().*/<A
 
     // primitive fields
     public int Int/*<=com.javacp.Test#Int.*/;
-    public long Long/*<=com.javacp.Test#Long.*/;
-    public float Float/*<=com.javacp.Test#Float.*/;
-    public short Short/*<=com.javacp.Test#Short.*/;
-    public byte Byte/*<=com.javacp.Test#Byte.*/;
-    public boolean Boolean/*<=com.javacp.Test#Boolean.*/;
-    public char Char/*<=com.javacp.Test#Char.*/;
+    public long/*=>scala.Long#*/ Long/*<=com.javacp.Test#Long.*/;
+    public float/*=>scala.Float#*/ Float/*<=com.javacp.Test#Float.*/;
+    public short/*=>scala.Short#*/ Short/*<=com.javacp.Test#Short.*/;
+    public byte/*=>scala.Byte#*/ Byte/*<=com.javacp.Test#Byte.*/;
+    public boolean/*=>scala.Boolean#*/ Boolean/*<=com.javacp.Test#Boolean.*/;
+    public char/*=>scala.Char#*/ Char/*<=com.javacp.Test#Char.*/;
 
 
     private int privateField/*<=com.javacp.Test#privateField.*/;
@@ -64,7 +64,7 @@ public final class Test/*<=com.javacp.Test#*//*<=com.javacp.Test#`<init>`().*/<A
     static void staticMethod/*<=com.javacp.Test#staticMethod().*/() {}
     static class StaticClass/*<=com.javacp.Test#StaticClass#*/ {}
 
-    void vararg/*<=com.javacp.Test#vararg().*/(int a/*<=com.javacp.Test#vararg().(a)*/, String/*=>java.lang.String*/... args/*<=com.javacp.Test#vararg().(args)*/) {}
+    void vararg/*<=com.javacp.Test#vararg().*/(int/*=>scala.Int#*/ a/*<=com.javacp.Test#vararg().(a)*/, String/*=>java.lang.String*/... args/*<=com.javacp.Test#vararg().(args)*/) {}
 
     strictfp void strictfpMethod/*<=com.javacp.Test#strictfpMethod().*/() {}
 

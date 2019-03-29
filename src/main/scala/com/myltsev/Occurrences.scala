@@ -46,6 +46,7 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
       rangeOpt = node match {
         case n: jp.ast.nodeTypes.NodeWithSimpleName[_] => n.getName.getRange.asScala
         case n: jp.ast.nodeTypes.NodeWithName[_] => n.getName.getRange.asScala
+        case n: jp.ast.Node => n.getRange.asScala
         case _ => None
       }
       range <- rangeOpt

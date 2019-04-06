@@ -136,7 +136,14 @@ trait Sym { semantics: Semantics =>
       case _: jp.ast.body.FieldDeclaration =>
         k.FIELD
       case _: jp.ast.body.VariableDeclarator =>
-        k.FIELD
+        node.getParentNode.asScala match {
+          case Some(_: jp.ast.expr.VariableDeclarationExpr) =>
+            k.LOCAL
+          case Some(_: jp.ast.body.FieldDeclaration) =>
+            k.FIELD
+          case _ =>
+            throw new RuntimeException("Unexpected kind of parent node. Please, submit the issue")
+        }
       case _: jp.ast.body.EnumConstantDeclaration =>
         k.FIELD
       case _: jp.ast.body.Parameter =>
@@ -168,7 +175,7 @@ trait Sym { semantics: Semantics =>
 
     def role: s.SymbolOccurrence.Role = kind match {
       case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.METHOD | k.INTERFACE |
-           k.CLASS | k.PARAMETER =>
+           k.CLASS | k.PARAMETER | k.LOCAL =>
         s.SymbolOccurrence.Role.DEFINITION
       case k.TYPE =>
         s.SymbolOccurrence.Role.REFERENCE

@@ -105,25 +105,6 @@ trait Sym { semantics: Semantics =>
       case coit: jp.ast.`type`.ClassOrInterfaceType =>
         val coitResolved = coit.resolve()
         coitResolved.getQualifiedName.replace('.', '/')
-      case pt: jp.ast.`type`.PrimitiveType =>
-        pt.getType match {
-          case jp.ast.`type`.PrimitiveType.Primitive.BOOLEAN =>
-            "scala/Boolean#"
-          case jp.ast.`type`.PrimitiveType.Primitive.CHAR =>
-            "scala/Char#"
-          case jp.ast.`type`.PrimitiveType.Primitive.BYTE =>
-            "scala/Byte#"
-          case jp.ast.`type`.PrimitiveType.Primitive.SHORT =>
-            "scala/Short#"
-          case jp.ast.`type`.PrimitiveType.Primitive.INT =>
-            "scala/Int#"
-          case jp.ast.`type`.PrimitiveType.Primitive.LONG =>
-            "scala/Long#"
-          case jp.ast.`type`.PrimitiveType.Primitive.FLOAT =>
-            "scala/Float#"
-          case jp.ast.`type`.PrimitiveType.Primitive.DOUBLE =>
-            "scala/Double#"
-        }
       case _ =>
         throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
     }

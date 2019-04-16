@@ -80,9 +80,5 @@ trait SymbolTable { semantics: Semantics =>
       }
     }
 
-    override def visit(pt: jp.ast.`type`.PrimitiveType, arg: SymbolTable): Unit = {
-      super.visit(pt, arg)
-      arg += pt.sym -> (arg(pt.sym) :+ pt)
-    }
   }
 }

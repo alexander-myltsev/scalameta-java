@@ -10,7 +10,7 @@ import java.util.Hashtable;
 public final class Test/*<=com.javacp.Test#*//*<=com.javacp.Test#`<init>`().*/<A/*<=com.javacp.Test#[A]*/ extends CharSequence/*=>java.lang.CharSequence*/ & Serializable/*=>java.io.Serializable*/, B/*<=com.javacp.Test#[B]*/> extends ArrayList/*=>java.util.ArrayList*/<A> implements Comparable/*=>java.lang.Comparable*/<B>, Serializable/*=>java.io.Serializable*/ {
 
     @Override
-    public final int/*=>scala.Int#*/ compareTo/*<=com.javacp.Test#compareTo().*/(B b/*<=com.javacp.Test#compareTo().(b)*/) {
+    public final int compareTo/*<=com.javacp.Test#compareTo().*/(B b/*<=com.javacp.Test#compareTo().(b)*/) {
         return 0;
     }
 
@@ -22,16 +22,16 @@ public final class Test/*<=com.javacp.Test#*//*<=com.javacp.Test#`<init>`().*/<A
     }
 
     ArrayList/*=>java.util.ArrayList*/<A> genericField/*<=com.javacp.Test#genericField.*/;
-    final int/*=>scala.Int#*/[] arrayField/*<=com.javacp.Test#arrayField.*/ = null;
+    final int[] arrayField/*<=com.javacp.Test#arrayField.*/ = null;
 
     ArrayList/*=>java.util.ArrayList*/<A> genericMethod/*<=com.javacp.Test#genericMethod().*/() {
         return null;
     }
-    int/*=>scala.Int#*/[] arrayMethod/*<=com.javacp.Test#arrayMethod().*/() {
-        return new int/*=>scala.Int#*/[0];
+    int[] arrayMethod/*<=com.javacp.Test#arrayMethod().*/() {
+        return new int[0];
     }
     void genericParams/*<=com.javacp.Test#genericParams().*/(A a/*<=com.javacp.Test#genericParams().(a)*/, B b/*<=com.javacp.Test#genericParams().(b)*/) { }
-    void primitiveParams/*<=com.javacp.Test#primitiveParams().*/(int/*=>scala.Int#*/ a/*<=com.javacp.Test#primitiveParams().(a)*/, long/*=>scala.Long#*/ b/*<=com.javacp.Test#primitiveParams().(b)*/, float/*=>scala.Float#*/ c/*<=com.javacp.Test#primitiveParams().(c)*/, double/*=>scala.Double#*/ d/*<=com.javacp.Test#primitiveParams().(d)*/, short/*=>scala.Short#*/ e/*<=com.javacp.Test#primitiveParams().(e)*/, byte/*=>scala.Byte#*/ f/*<=com.javacp.Test#primitiveParams().(f)*/, boolean/*=>scala.Boolean#*/ g/*<=com.javacp.Test#primitiveParams().(g)*/, char/*=>scala.Char#*/ h/*<=com.javacp.Test#primitiveParams().(h)*/) { }
+    void primitiveParams/*<=com.javacp.Test#primitiveParams().*/(int a/*<=com.javacp.Test#primitiveParams().(a)*/, long b/*<=com.javacp.Test#primitiveParams().(b)*/, float c/*<=com.javacp.Test#primitiveParams().(c)*/, double d/*<=com.javacp.Test#primitiveParams().(d)*/, short e/*<=com.javacp.Test#primitiveParams().(e)*/, byte f/*<=com.javacp.Test#primitiveParams().(f)*/, boolean g/*<=com.javacp.Test#primitiveParams().(g)*/, char h/*<=com.javacp.Test#primitiveParams().(h)*/) { }
     void typeParams/*<=com.javacp.Test#typeParams().*/(ArrayList/*=>java.util.ArrayList*/<HashMap/*=>java.util.HashMap*/<A, String/*=>java.lang.String*/[]>> a/*<=com.javacp.Test#typeParams().(a)*/, Hashtable/*=>java.util.Hashtable*/<String/*=>java.lang.String*/, B> b/*<=com.javacp.Test#typeParams().(b)*/) { }
     <C/*<=com.javacp.Test#methodTypeParams().[C]*/ extends Integer/*=>java.lang.Integer*/> void methodTypeParams/*<=com.javacp.Test#methodTypeParams().*/(C c/*<=com.javacp.Test#methodTypeParams().(c)*/) { }
 
@@ -39,19 +39,19 @@ public final class Test/*<=com.javacp.Test#*//*<=com.javacp.Test#`<init>`().*/<A
     public void overload/*<=com.javacp.Test#overload(+1).*/(Logger/*=>com.javacp.Logger*/ a/*<=com.javacp.Test#overload(+1).(a)*/) { }
 
     // primitive fields
-    public int/*=>scala.Int#*/ Int/*<=com.javacp.Test#Int.*/;
-    public long/*=>scala.Long#*/ Long/*<=com.javacp.Test#Long.*/;
-    public float/*=>scala.Float#*/ Float/*<=com.javacp.Test#Float.*/;
-    public short/*=>scala.Short#*/ Short/*<=com.javacp.Test#Short.*/;
-    public byte/*=>scala.Byte#*/ Byte/*<=com.javacp.Test#Byte.*/;
-    public boolean/*=>scala.Boolean#*/ Boolean/*<=com.javacp.Test#Boolean.*/;
-    public char/*=>scala.Char#*/ Char/*<=com.javacp.Test#Char.*/;
+    public int Int/*<=com.javacp.Test#Int.*/;
+    public long Long/*<=com.javacp.Test#Long.*/;
+    public float Float/*<=com.javacp.Test#Float.*/;
+    public short Short/*<=com.javacp.Test#Short.*/;
+    public byte Byte/*<=com.javacp.Test#Byte.*/;
+    public boolean Boolean/*<=com.javacp.Test#Boolean.*/;
+    public char Char/*<=com.javacp.Test#Char.*/;
 
 
-    private int/*=>scala.Int#*/ privateField/*<=com.javacp.Test#privateField.*/;
-    protected int/*=>scala.Int#*/ protectedField/*<=com.javacp.Test#protectedField.*/;
-    public int/*=>scala.Int#*/ publicField/*<=com.javacp.Test#publicField.*/;
-    int/*=>scala.Int#*/ packagePrivateField/*<=com.javacp.Test#packagePrivateField.*/;
+    private int privateField/*<=com.javacp.Test#privateField.*/;
+    protected int protectedField/*<=com.javacp.Test#protectedField.*/;
+    public int publicField/*<=com.javacp.Test#publicField.*/;
+    int packagePrivateField/*<=com.javacp.Test#packagePrivateField.*/;
 
     private void privateMethod/*<=com.javacp.Test#privateMethod().*/() { }
     protected void protectedMethod/*<=com.javacp.Test#protectedMethod().*/() { }
@@ -60,11 +60,11 @@ public final class Test/*<=com.javacp.Test#*//*<=com.javacp.Test#`<init>`().*/<A
 
     public Serializable/*=>java.io.Serializable*/ anonymous/*<=com.javacp.Test#anonymous.*/ = new Serializable/*=>java.io.Serializable*/() { };
 
-    static int/*=>scala.Int#*/ staticField/*<=com.javacp.Test#staticField.*/;
+    static int staticField/*<=com.javacp.Test#staticField.*/;
     static void staticMethod/*<=com.javacp.Test#staticMethod().*/() {}
     static class StaticClass/*<=com.javacp.Test#StaticClass#*/ {}
 
-    void vararg/*<=com.javacp.Test#vararg().*/(int/*=>scala.Int#*/ a/*<=com.javacp.Test#vararg().(a)*/, String/*=>java.lang.String*/... args/*<=com.javacp.Test#vararg().(args)*/) {}
+    void vararg/*<=com.javacp.Test#vararg().*/(int a/*<=com.javacp.Test#vararg().(a)*/, String/*=>java.lang.String*/... args/*<=com.javacp.Test#vararg().(args)*/) {}
 
     strictfp void strictfpMethod/*<=com.javacp.Test#strictfpMethod().*/() {}
 

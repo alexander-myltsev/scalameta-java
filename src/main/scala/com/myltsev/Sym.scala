@@ -123,6 +123,21 @@ trait Sym { semantics: Semantics =>
       case coit: jp.ast.`type`.ClassOrInterfaceType =>
         val coitResolved = coit.resolve()
         coitResolved.getQualifiedName.replace('.', '/')
+      case ne: jp.ast.expr.NameExpr =>
+        try {
+          ne.resolve() match {
+            case jppd: jp.symbolsolver.javaparsermodel.declarations.JavaParserParameterDeclaration =>
+              jppd.getWrappedNode.sym
+            case jpsd: jp.symbolsolver.javaparsermodel.declarations.JavaParserSymbolDeclaration =>
+              jpsd.getWrappedNode.sym
+            case jpfd: jp.symbolsolver.javaparsermodel.declarations.JavaParserFieldDeclaration =>
+              jpfd.getVariableDeclarator.sym
+            case _ =>
+              throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
+          }
+        } catch {
+          case ex: jp.resolution.UnsolvedSymbolException => ""
+        }
       case _ =>
         throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
     }
@@ -169,12 +184,41 @@ trait Sym { semantics: Semantics =>
         k.TYPE
       case _: jp.ast.`type`.PrimitiveType =>
         k.TYPE
+      case ne: jp.ast.expr.NameExpr =>
+        try {
+          ne.resolve() match {
+            case jppd: jp.symbolsolver.javaparsermodel.declarations.JavaParserParameterDeclaration =>
+              k.LOCAL
+            case jpsd: jp.symbolsolver.javaparsermodel.declarations.JavaParserSymbolDeclaration =>
+              k.LOCAL
+            case jpfd: jp.symbolsolver.javaparsermodel.declarations.JavaParserFieldDeclaration =>
+              k.FIELD
+            case _ =>
+              throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
+          }
+        } catch {
+          case ex: jp.resolution.UnsolvedSymbolException => k.UNKNOWN_KIND
+        }
       case n => sys.error(n.toString)
     }
 
     def role: s.SymbolOccurrence.Role = kind match {
+      case k.LOCAL =>
+        node match {
+          case ne: jp.ast.expr.NameExpr =>
+            ne.resolve() match {
+              case jppd: jp.symbolsolver.javaparsermodel.declarations.JavaParserParameterDeclaration =>
+                s.SymbolOccurrence.Role.REFERENCE
+              case jpsd: jp.symbolsolver.javaparsermodel.declarations.JavaParserSymbolDeclaration =>
+                s.SymbolOccurrence.Role.REFERENCE
+              case _ =>
+                throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
+            }
+          case _ =>
+            s.SymbolOccurrence.Role.DEFINITION
+        }
       case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.METHOD | k.INTERFACE |
-           k.CLASS | k.PARAMETER | k.LOCAL =>
+           k.CLASS | k.PARAMETER =>
         s.SymbolOccurrence.Role.DEFINITION
       case k.TYPE =>
         s.SymbolOccurrence.Role.REFERENCE

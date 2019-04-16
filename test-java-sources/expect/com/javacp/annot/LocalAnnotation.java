@@ -5,6 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;
 
-@Retention(RetentionPolicy.CLASS)
-@Target(ElementType.LOCAL_VARIABLE)
+@Retention(RetentionPolicy/*??*/.CLASS)
+@Target(ElementType/*??*/.LOCAL_VARIABLE)
 public @interface LocalAnnotation/*<=com.javacp.annot.LocalAnnotation#*/{}

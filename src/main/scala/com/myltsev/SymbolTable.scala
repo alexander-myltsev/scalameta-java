@@ -79,6 +79,12 @@ trait SymbolTable { semantics: Semantics =>
       arg += s -> (arg(s) :+ ed)
     }
 
+    override def visit(ne: jp.ast.expr.NameExpr, arg: SymbolTable): Unit = {
+      super.visit(ne, arg)
+      val s = ne.sym
+      arg += s -> (arg(s) :+ ne)
+    }
+
     override def visit(coit: jp.ast.`type`.ClassOrInterfaceType, arg: SymbolTable): Unit = {
       super.visit(coit, arg)
       try {

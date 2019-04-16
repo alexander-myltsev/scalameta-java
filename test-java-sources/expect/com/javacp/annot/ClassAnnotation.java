@@ -5,6 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.annotation.ElementType;
 
-@Retention(RetentionPolicy.CLASS)
-@Target(ElementType.TYPE)
+@Retention(RetentionPolicy/*??*/.CLASS)
+@Target(ElementType/*??*/.TYPE)
 public @interface ClassAnnotation/*<=com.javacp.annot.ClassAnnotation#*/{}

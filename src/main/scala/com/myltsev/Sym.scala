@@ -11,6 +11,17 @@ import scala.meta.internal.semanticdb.SymbolInformation.{Kind => k}
 import scala.meta.internal.semanticdb.SymbolInformation.{Property => p}
 
 trait Sym { semantics: Semantics =>
+  var _suffixId = 0
+  val _sym2Suffix = mutable.Map.empty[jp.ast.Node, String]
+  def getSuffix(node: jp.ast.Node): String = {
+    if (!_sym2Suffix.contains(node)) {
+      _sym2Suffix += node -> _suffixId.toString
+      _suffixId += 1
+    }
+    val suffix = _sym2Suffix(node)
+    suffix
+  }
+
   implicit class NodeOps(node: jp.ast.Node) {
     def enclosingPackage: Option[jp.ast.PackageDeclaration] = node match {
       case e: jp.ast.CompilationUnit => e.getPackageDeclaration.asScala
@@ -98,8 +109,15 @@ trait Sym { semantics: Semantics =>
       case _: jp.ast.body.EnumConstantDeclaration =>
         Symbols.Global(owner, d.Term(symbolName))
       case _: jp.ast.body.VariableDeclarator =>
-        val sn = symbolName
-        Symbols.Global(owner, d.Term(sn))
+        node.getParentNode.asScala match {
+          case Some(_: jp.ast.expr.VariableDeclarationExpr) =>
+            Symbols.Local(semantics.getSuffix(node))
+          case Some(_: jp.ast.body.FieldDeclaration) =>
+            val sn = symbolName
+            Symbols.Global(owner, d.Term(sn))
+          case _ =>
+            throw new RuntimeException("Unexpected kind of parent node. Please, submit the issue")
+        }
       case _: jp.ast.`type`.TypeParameter =>
         Symbols.Global(owner, d.TypeParameter(symbolName))
       case coit: jp.ast.`type`.ClassOrInterfaceType =>

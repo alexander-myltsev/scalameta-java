@@ -39,10 +39,10 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
     occurrences.toSeq
   }
 
-  def find(sym: String): Option[s.SymbolOccurrence] = {
-    val range = for {
-      node <- symbolTable.get(sym)
-      _ <- node.getRange.asScala
+  def find(sym: String): Vector[s.SymbolOccurrence] = {
+    val occurrences = for {
+      node <- symbolTable(sym)
+      if node.getRange.asScala.isDefined
       rangeOpt = node match {
         case n: jp.ast.nodeTypes.NodeWithSimpleName[_] => n.getName.getRange.asScala
         case n: jp.ast.nodeTypes.NodeWithName[_] => n.getName.getRange.asScala
@@ -51,21 +51,22 @@ class Occurrences(parseResult: jp.ParseResult[jp.ast.CompilationUnit]) extends S
       }
       range <- rangeOpt
     } yield {
-      s.Range(
+      val r = s.Range(
         startLine = range.begin.line - 1,
         startCharacter = range.begin.column - 1,
         endLine = range.end.line - 1,
         endCharacter = range.end.column
       )
+
+      val occurrence = s.SymbolOccurrence(
+        symbol = sym,
+        range = Some(r),
+        role = node.role,
+      )
+      occurrence
     }
 
-    val role = for (node <- symbolTable.get(sym)) yield node.role
-    val occurrence = s.SymbolOccurrence(
-      symbol = sym,
-      range = range,
-      role = role.getOrElse(s.SymbolOccurrence.Role.UNKNOWN_ROLE),
-    )
-    Some(occurrence)
+    occurrences
   }
 }
 

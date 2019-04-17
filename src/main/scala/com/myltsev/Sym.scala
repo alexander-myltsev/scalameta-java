@@ -138,6 +138,29 @@ trait Sym { semantics: Semantics =>
         } catch {
           case ex: jp.resolution.UnsolvedSymbolException => ""
         }
+      case mce: jp.ast.expr.MethodCallExpr =>
+        mce.resolve() match {
+          case rmd: jp.symbolsolver.reflectionmodel.ReflectionMethodDeclaration =>
+            val siblingMethods = rmd.declaringType()
+              .getAllMethods.asScala.toVector
+              .filter { m => m.getName == rmd.getName }
+              .sortBy { x => x.getDeclaration.isStatic }
+            val methodPlace = siblingMethods.indexWhere { m =>
+              rmd.getReturnType.toString == m.getDeclaration.getReturnType.toString &&
+                rmd.getNumberOfParams == m.getDeclaration.getNumberOfParams
+            }
+            val disambig = (methodPlace: @switch) match {
+              case -1 =>
+                throw new RuntimeException("Unexpected state. Please, submit the issue")
+              case 0 => "()"
+              case x => s"(+$x)"
+            }
+            Symbols.Global(
+              rmd.declaringType.getQualifiedName.replace('.', '/') + '#',
+              d.Method(rmd.getName, disambig))
+          case _ =>
+            throw new RuntimeException("Unexpected kind of declaration. Please, submit the issue")
+        }
       case _ =>
         throw new RuntimeException("Unexpected kind of node. Please, submit the issue")
     }
@@ -199,6 +222,8 @@ trait Sym { semantics: Semantics =>
         } catch {
           case ex: jp.resolution.UnsolvedSymbolException => k.UNKNOWN_KIND
         }
+      case mce: jp.ast.expr.MethodCallExpr =>
+        k.METHOD
       case n => sys.error(n.toString)
     }
 
@@ -217,7 +242,14 @@ trait Sym { semantics: Semantics =>
           case _ =>
             s.SymbolOccurrence.Role.DEFINITION
         }
-      case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.METHOD | k.INTERFACE |
+      case k.METHOD =>
+        node match {
+          case mce: jp.ast.expr.MethodCallExpr =>
+            s.SymbolOccurrence.Role.REFERENCE
+          case cd: jp.ast.body.CallableDeclaration[_] =>
+            s.SymbolOccurrence.Role.DEFINITION
+        }
+      case k.PACKAGE | k.FIELD | k.TYPE_PARAMETER | k.CONSTRUCTOR | k.INTERFACE |
            k.CLASS | k.PARAMETER =>
         s.SymbolOccurrence.Role.DEFINITION
       case k.TYPE =>
